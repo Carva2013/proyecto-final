@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio Climático + Mi Plantita</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🌍 Cambio Climático</h1>
+            <p class="subtitle">Aprende y cuida tu plantita</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Secciones de contenido (resumidas) -->
+        <div class="section" id="seccion1">
+            <h2>1. ¿Qué es el cambio climático?</h2>
+            <div class="image-container">
+                <img src="https://www.lavanguardia.com/files/content_image_desktop_filter/uploads/2023/12/04/656dbe3ddc8b1.jpeg" alt="Planeta">
+            </div>
+            <p>El cambio climático es la alteración a largo plazo de las temperaturas y patrones climáticos del planeta. Aunque existen cambios naturales, actualmente el principal motivo es la actividad humana, especialmente la quema de combustibles fósiles.</p>
+            <button class="btn-escuchar" onclick="leerTexto('seccion1')">🔊 Escuchar</button>
+        </div>
+
+        <div class="section" id="seccion2">
+            <h2>2. ¿Es grave este problema?</h2>
+            <div class="image-container">
+                <img src="https://ciencia.nasa.gov/wp-content/uploads/sites/2/2024/01/efectos-page-triptych.webp" alt="Efectos">
+            </div>
+            <p>Sí, es un problema grave y nos concierne directamente. Sus efectos ya se observan en olas de calor, sequías, inundaciones, derretimiento de glaciares, etc.</p>
+            <button class="btn-escuchar" onclick="leerTexto('seccion2')">🔊 Escuchar</button>
+        </div>
+
+        <div class="section" id="seccion3">
+            <h2>3. ¿Qué lo causa?</h2>
+            <div class="image-container">
+                <img src="https://www.es.amnesty.org/fileadmin/user_upload/AP_19047744042370_900.jpg" alt="Causas">
+            </div>
+            <p>Principalmente por combustibles fósiles, deforestación, industrias, ganadería y consumo excesivo.</p>
+            <button class="btn-escuchar" onclick="leerTexto('seccion3')">🔊 Escuchar</button>
+        </div>
+
+        <div class="section" id="seccion4">
+            <h2>4. ¿Cómo podemos frenarlo?</h2>
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09" alt="Soluciones">
+            </div>
+            <p>Usando energías renovables, ahorrando energía, reciclando, plantando árboles, etc.</p>
+            <button class="btn-escuchar" onclick="leerTexto('seccion4')">🔊 Escuchar</button>
+        </div>
+
+        <!-- Minijuego -->
+        <div class="section game-section">
+            <div class="game-header">
+                <h2>🌱 Cuida tu Plantita y Ayuda al Planeta</h2>
+            </div>
+            <div class="plant-container">
+                <div id="plant" class="plant">🌱</div>
+            </div>
+            <div class="progress-bar"><div id="progress" class="progress"></div></div>
+            <div class="stats">
+                <div><strong>Nivel:</strong> <span id="level">1</span></div>
+                <div><strong>💧 Agua:</strong> <span id="water">0</span></div>
+            </div>
+            <button class="regar" onclick="clickPlant()">💧 Regar Planta</button>
+        </div>
+
+        <!-- QUIZ CON 5 PREGUNTAS FÁCILES -->
+        <div class="section quiz-section">
+            <h2>🧠 5 Preguntas Fáciles</h2>
+
+            <div class="question">
+                <p><strong>1. ¿Qué es el cambio climático principalmente?</strong></p>
+                <button class="answer-btn" onclick="responder(1, true)">El calentamiento del planeta por culpa del ser humano</button>
+                <button class="answer-btn" onclick="responder(1, false)">Solo cambios naturales del clima</button>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="question">
+                <p><strong>2. ¿Qué libera más CO₂?</strong></p>
+                <button class="answer-btn" onclick="responder(2, true)">Quemar petróleo, gas y carbón</button>
+                <button class="answer-btn" onclick="responder(2, false)">Plantar árboles</button>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="question">
+                <p><strong>3. ¿Qué podemos hacer para ayudar?</strong></p>
+                <button class="answer-btn" onclick="responder(3, true)">Plantar árboles y reciclar</button>
+                <button class="answer-btn" onclick="responder(3, false)">Tirar más basura</button>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <div class="question">
+                <p><strong>4. ¿Qué transporte es mejor para el planeta?</strong></p>
+                <button class="answer-btn" onclick="responder(4, true)">Bicicleta o caminar</button>
+                <button class="answer-btn" onclick="responder(4, false)">Usar el auto para distancias cortas</button>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+
+            <div class="question">
+                <p><strong>5. ¿Es importante ahorrar electricidad y agua?</strong></p>
+                <button class="answer-btn" onclick="responder(5, true)">Sí</button>
+                <button class="answer-btn" onclick="responder(5, false)">No</button>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Aprender • Actuar • Crecer juntos 🌍</p>
+    </footer>
+
+    <script>
+        // Lectura de voz
+        let voices = [];
+        function cargarVoces() { voices = speechSynthesis.getVoices(); }
+        speechSynthesis.onvoiceschanged = cargarVoces;
+
+        function leerTexto(seccionId) {
+            const seccion = document.getElementById(seccionId);
+            let texto = seccion.innerText || seccion.textContent;
+            texto = texto.replace(/^\d+\.\s.*?\n/, '').trim();
+            texto = texto.replace(/🔊 Escuchar/g, '').trim();
+
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(texto);
+                const vozEsp = voices.find(v => v.lang.includes('es'));
+                if (vozEsp) utterance.voice = vozEsp;
+                utterance.rate = 1.05;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Minijuego
+        let water = 0;
+        let level = 1;
+        let clicksPerClick = 1;
+        let maxWater = 100;
+
+        const plantElement = document.getElementById('plant');
+        const waterElement = document.getElementById('water');
+        const levelElement = document.getElementById('level');
+        const progressElement = document.getElementById('progress');
+
+        function updateDisplay() {
+            waterElement.textContent = water;
+            levelElement.textContent = level;
+            const progress = Math.min((water / maxWater) * 100, 100);
+            progressElement.style.width = progress + "%";
+        }
+
+        function clickPlant() {
+            water += clicksPerClick;
+            plantElement.style.transform = 'scale(1.5) rotate(15deg)';
+            setTimeout(() => plantElement.style.transform = 'scale(1) rotate(0deg)', 250);
+            
+            if (water >= maxWater) {
+                level++;
+                water = 0;
+                maxWater = Math.floor(maxWater * 1.3);
+                alert(`¡Felicidades! Subiste al nivel ${level} 🌳`);
+            }
+            updateDisplay();
+        }
+
+        // Quiz con 5 preguntas
+        function responder(pregunta, esCorrecta) {
+            const feedback = document.getElementById(`feedback${pregunta}`);
+            if (esCorrecta) {
+                feedback.style.color = "green";
+                feedback.innerHTML = "✅ ¡Correcto! Muy bien";
+            } else {
+                feedback.style.color = "red";
+                feedback.innerHTML = "❌ Incorrecto. ¡Inténtalo otra vez!";
+            }
+        }
+
+        window.onload = () => {
+            cargarVoces();
+            setTimeout(cargarVoces, 1000);
+            updateDisplay();
+        };
+    </script>
+</body>
+</html>
